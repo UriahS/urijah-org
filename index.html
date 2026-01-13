@@ -2,63 +2,81 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loading domain...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Loading...</title>
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
-    
+
     <style>
         body, html {
             margin: 0;
             padding: 0;
-            height: 100%;
             width: 100%;
-            background-color: black;
+            height: 100%;
             overflow: hidden;
         }
 
-        .container {
+        body {
+            background-color: #000000;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            width: 100vw;
         }
 
-        #domain-logo {
-            color: white;
+        #logo-container {
+            width: 90vw; 
+            height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        svg {
+            width: 100%;
+            max-height: 100%;
+            display: block; 
+        }
+
+        text {
             font-family: 'Audiowide', cursive;
-            font-weight: 900;
             text-transform: uppercase;
-            text-align: center;
-            font-size: 13vw;
-            letter-spacing: -2px; 
-            word-wrap: break-word;
-            max-width: 95%;
-            line-height: 1.1;
+            fill: #ffffff;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 id="domain-logo">Loading domain...</h1>
+    <div id="logo-container">
+        <svg id="responsive-svg">
+            <text id="domain-text" x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">
+            </text>
+        </svg>
     </div>
 
     <script>
+        const domainName = window.location.hostname || "Local File";
+
+        document.title = domainName;
+
+        const textElement = document.getElementById('domain-text');
+        const svgElement = document.getElementById('responsive-svg');
+        
+        textElement.textContent = domainName;
+
+        document.fonts.ready.then(() => {
+            const bbox = textElement.getBBox();
+            svgElement.setAttribute("viewBox", `${bbox.x} ${bbox.y} ${bbox.width} ${bbox.height}`);
+        });
+
+        window.addEventListener('resize', () => {
+             const bbox = textElement.getBBox();
+             svgElement.setAttribute("viewBox", `${bbox.x} ${bbox.y} ${bbox.width} ${bbox.height}`);
+        });
+        
         document.addEventListener("DOMContentLoaded", function() {
-            var currentDomain = window.location.hostname;
-
-            currentDomain = currentDomain.replace(/^www\./, '');
-
-            document.title = currentDomain;
-
-            var logoElement = document.getElementById("domain-logo");
-            logoElement.innerText = currentDomain;
-            
-            if (!currentDomain) {
-                logoElement.innerText = "Local File";
-                document.title = "Local File";
-            }
+             const bbox = textElement.getBBox();
+             svgElement.setAttribute("viewBox", `${bbox.x} ${bbox.y} ${bbox.width} ${bbox.height}`);
         });
     </script>
 </body>

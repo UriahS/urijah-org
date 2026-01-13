@@ -3,35 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Urijah.org</title>
+    <title>Loading domain...</title>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+    
     <style>
-        body {
-            background-color: #000000;
+        body, html {
             margin: 0;
             padding: 0;
-            height: 100vh;
+            height: 100%;
+            width: 100%;
+            background-color: black;
+            overflow: hidden;
+        }
+
+        .container {
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 100vh;
+            width: 100vw;
         }
 
-        .logo-text {
-            color: #ffffff;
-            background-color: #000000;
-            font-family: 'Righteous', cursive;
-            font-size: 5rem;
+        #domain-logo {
+            color: white;
+            font-family: 'Audiowide', cursive;
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 5px;
-            cursor: default;
+            text-align: center;
+            font-size: 13vw;
+            letter-spacing: -2px; 
+            word-wrap: break-word;
+            max-width: 95%;
+            line-height: 1.1;
         }
     </style>
 </head>
 <body>
-    <h1 class="logo-text">Urijah.org</h1>
+    <div class="container">
+        <h1 id="domain-logo">Loading domain...</h1>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var currentDomain = window.location.hostname;
+
+            currentDomain = currentDomain.replace(/^www\./, '');
+
+            document.title = currentDomain;
+
+            var logoElement = document.getElementById("domain-logo");
+            logoElement.innerText = currentDomain;
+            
+            if (!currentDomain) {
+                logoElement.innerText = "Local File";
+                document.title = "Local File";
+            }
+        });
+    </script>
 </body>
 </html>
